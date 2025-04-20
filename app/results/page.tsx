@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
 
 interface SkinAnalysisResult {
   skinType: string;
@@ -178,16 +179,37 @@ export default function ResultsPage() {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-lavender-50 to-blue-50 dark:from-gray-900 dark:to-gray-800 p-4">
         <div className="text-center">
-          <h3 className="mb-4 text-xl font-bold">No analysis results found</h3>
-          <p className="mb-6 text-gray-500 dark:text-gray-400">
+          <motion.h3
+            className="mb-4 text-xl font-bold"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8 }}
+          >
+            No analysis results found
+          </motion.h3>
+          <motion.p
+            className="mb-6 text-gray-500 dark:text-gray-400"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
             Please complete the skin analysis form to see your personalized
             results.
-          </p>
-          <Link href="/analysis">
-            <Button className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600">
-              Go to Analysis Form
-            </Button>
-          </Link>
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+          >
+            <Link href="/analysis">
+              <Button className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600">
+                Go to Analysis Form
+              </Button>
+            </Link>
+          </motion.div>
         </div>
       </div>
     );
@@ -210,175 +232,225 @@ export default function ResultsPage() {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-4xl space-y-8">
             <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold tracking-tight">
+              <motion.h1
+                className="text-3xl font-bold tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+              >
                 Your Personalized Skincare Analysis
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400">
+              </motion.h1>
+              <motion.p
+                className="text-gray-500 dark:text-gray-400"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
                 Based on your skin profile, we've created a customized skincare
                 routine just for you.
-              </p>
+              </motion.p>
             </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>Skin Profile Summary</CardTitle>
+                  <CardDescription>
+                    Here's what we've detected about your skin.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-6 md:grid-cols-2">
+                    <div>
+                      <h3 className="mb-2 font-semibold">Skin Type</h3>
+                      <p className="text-gray-700 dark:text-gray-300">
+                        {result.skinType}
+                      </p>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Skin Profile Summary</CardTitle>
-                <CardDescription>
-                  Here's what we've detected about your skin.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div>
-                    <h3 className="mb-2 font-semibold">Skin Type</h3>
-                    <p className="text-gray-700 dark:text-gray-300">
-                      {result.skinType}
-                    </p>
+                      <h3 className="mb-2 mt-4 font-semibold">Skin Concerns</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {result.concerns.map((concern, index) => (
+                          <span
+                            key={index}
+                            className="inline-flex items-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 px-2.5 py-0.5 text-xs font-medium text-lavender-800 dark:text-lavender-300"
+                          >
+                            {concern}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
 
-                    <h3 className="mb-2 mt-4 font-semibold">Skin Concerns</h3>
-                    <div className="flex flex-wrap gap-2">
-                      {result.concerns.map((concern, index) => (
-                        <span
-                          key={index}
-                          className="inline-flex items-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 px-2.5 py-0.5 text-xs font-medium text-lavender-800 dark:text-lavender-300"
-                        >
-                          {concern}
-                        </span>
-                      ))}
+                    <div className="space-y-4">
+                      <div>
+                        <div className="mb-2 flex items-center justify-between">
+                          <div className="flex items-center">
+                            <Droplets className="mr-2 h-4 w-4 text-blue-500" />
+                            <span className="font-medium">Hydration Score</span>
+                          </div>
+                          <span>{result.hydrationScore}/100</span>
+                        </div>
+                        <Progress
+                          value={result.hydrationScore}
+                          className="h-2"
+                        />
+                      </div>
+
+                      <div>
+                        <div className="mb-2 flex items-center justify-between">
+                          <div className="flex items-center">
+                            <Flame className="mr-2 h-4 w-4 text-orange-500" />
+                            <span className="font-medium">Oiliness Score</span>
+                          </div>
+                          <span>{result.oilinessScore}/100</span>
+                        </div>
+                        <Progress
+                          value={result.oilinessScore}
+                          className="h-2"
+                        />
+                      </div>
                     </div>
                   </div>
-
-                  <div className="space-y-4">
-                    <div>
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Droplets className="mr-2 h-4 w-4 text-blue-500" />
-                          <span className="font-medium">Hydration Score</span>
-                        </div>
-                        <span>{result.hydrationScore}/100</span>
-                      </div>
-                      <Progress value={result.hydrationScore} className="h-2" />
-                    </div>
-
-                    <div>
-                      <div className="mb-2 flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Flame className="mr-2 h-4 w-4 text-orange-500" />
-                          <span className="font-medium">Oiliness Score</span>
-                        </div>
-                        <span>{result.oilinessScore}/100</span>
-                      </div>
-                      <Progress value={result.oilinessScore} className="h-2" />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </motion.div>
 
             <div className="grid gap-6 md:grid-cols-2">
-              <Card>
-                <CardHeader className="bg-blue-50 dark:bg-blue-900/20 rounded-t-lg">
-                  <div className="flex items-center">
-                    <Sun className="mr-2 h-5 w-5 text-amber-500" />
-                    <CardTitle>Morning Routine</CardTitle>
-                  </div>
-                  <CardDescription>
-                    Follow these steps every morning for best results.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <ol className="space-y-6">
-                    {result.morningRoutine.steps.map((step, index) => (
-                      <li
-                        key={index}
-                        className="relative pl-8 pb-6 border-b last:border-0 last:pb-0"
-                      >
-                        <div className="absolute left-0 flex h-6 w-6 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-xs font-medium text-lavender-800 dark:text-lavender-300">
-                          {index + 1}
-                        </div>
-                        <h4 className="font-medium">{step.step}</h4>
-                        <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                          {step.product}
-                        </p>
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                          {step.description}
-                        </p>
-                      </li>
-                    ))}
-                  </ol>
-                </CardContent>
-              </Card>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+              >
+                <Card>
+                  <CardHeader className="bg-blue-50 dark:bg-blue-900/20 rounded-t-lg">
+                    <div className="flex items-center">
+                      <Sun className="mr-2 h-5 w-5 text-amber-500" />
+                      <CardTitle>Morning Routine</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Follow these steps every morning for best results.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <ol className="space-y-6">
+                      {result.morningRoutine.steps.map((step, index) => (
+                        <li
+                          key={index}
+                          className="relative pl-8 pb-6 border-b last:border-0 last:pb-0"
+                        >
+                          <div className="absolute left-0 flex h-6 w-6 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-xs font-medium text-lavender-800 dark:text-lavender-300">
+                            {index + 1}
+                          </div>
+                          <h4 className="font-medium">{step.step}</h4>
+                          <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                            {step.product}
+                          </p>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            {step.description}
+                          </p>
+                        </li>
+                      ))}
+                    </ol>
+                  </CardContent>
+                </Card>
+              </motion.div>
 
-              <Card>
-                <CardHeader className="bg-indigo-50 dark:bg-indigo-900/20 rounded-t-lg">
-                  <div className="flex items-center">
-                    <Moon className="mr-2 h-5 w-5 text-indigo-500" />
-                    <CardTitle>Evening Routine</CardTitle>
-                  </div>
-                  <CardDescription>
-                    Follow these steps every evening for best results.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <ol className="space-y-6">
-                    {result.eveningRoutine.steps.map((step, index) => (
-                      <li
-                        key={index}
-                        className="relative pl-8 pb-6 border-b last:border-0 last:pb-0"
-                      >
-                        <div className="absolute left-0 flex h-6 w-6 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-xs font-medium text-lavender-800 dark:text-lavender-300">
-                          {index + 1}
-                        </div>
-                        <h4 className="font-medium">{step.step}</h4>
-                        <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                          {step.product}
-                        </p>
-                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                          {step.description}
-                        </p>
-                      </li>
-                    ))}
-                  </ol>
-                </CardContent>
-              </Card>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.0, duration: 0.8 }}
+              >
+                <Card>
+                  <CardHeader className="bg-indigo-50 dark:bg-indigo-900/20 rounded-t-lg">
+                    <div className="flex items-center">
+                      <Moon className="mr-2 h-5 w-5 text-indigo-500" />
+                      <CardTitle>Evening Routine</CardTitle>
+                    </div>
+                    <CardDescription>
+                      Follow these steps every evening for best results.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="pt-6">
+                    <ol className="space-y-6">
+                      {result.eveningRoutine.steps.map((step, index) => (
+                        <li
+                          key={index}
+                          className="relative pl-8 pb-6 border-b last:border-0 last:pb-0"
+                        >
+                          <div className="absolute left-0 flex h-6 w-6 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-xs font-medium text-lavender-800 dark:text-lavender-300">
+                            {index + 1}
+                          </div>
+                          <h4 className="font-medium">{step.step}</h4>
+                          <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                            {step.product}
+                          </p>
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            {step.description}
+                          </p>
+                        </li>
+                      ))}
+                    </ol>
+                  </CardContent>
+                </Card>
+              </motion.div>
             </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>Lifestyle & Skincare Tips</CardTitle>
+                  <CardDescription>
+                    Follow these recommendations to improve your skin health.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {result.tips.map((tip, index) => (
+                      <li key={index} className="flex items-start">
+                        <div className="mr-2 mt-0.5 h-5 w-5 flex-shrink-0 rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-center text-xs font-medium leading-5 text-lavender-800 dark:text-lavender-300">
+                          {index + 1}
+                        </div>
+                        <span className="text-gray-700 dark:text-gray-300">
+                          {tip}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            </motion.div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Lifestyle & Skincare Tips</CardTitle>
-                <CardDescription>
-                  Follow these recommendations to improve your skin health.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2">
-                  {result.tips.map((tip, index) => (
-                    <li key={index} className="flex items-start">
-                      <div className="mr-2 mt-0.5 h-5 w-5 flex-shrink-0 rounded-full bg-lavender-100 dark:bg-lavender-900/50 text-center text-xs font-medium leading-5 text-lavender-800 dark:text-lavender-300">
-                        {index + 1}
-                      </div>
-                      <span className="text-gray-700 dark:text-gray-300">
-                        {tip}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </CardContent>
-            </Card>
-
-            <div className="flex justify-center">
+            <motion.div
+              className="flex justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0, duration: 0.8 }}
+            >
               <Link href="/">
                 <Button className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600">
                   Back to Home
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </main>
       <footer className="border-t bg-white dark:bg-gray-950">
         <div className="container py-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} RejuveAI. All rights reserved.
+          © {new Date().getFullYear()} DermaGlow AI. All rights reserved.
         </div>
       </footer>
     </div>

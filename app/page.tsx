@@ -1,7 +1,9 @@
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
@@ -9,7 +11,9 @@ export default function Home() {
       <header className="border-b">
         <div className="container flex h-16 items-center justify-between px-4 md:px-6">
           <div className="flex items-center gap-2">
-            <span className="text-xl font-bold tracking-tight">RejuveAI</span>
+            <span className="text-xl font-bold tracking-tight">
+              DermaGlow AI
+            </span>
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
@@ -22,34 +26,61 @@ export default function Home() {
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+                  <motion.h1
+                    className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                  >
                     Smarter Skincare Starts Here
-                  </h1>
-                  <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl">
+                  </motion.h1>
+                  <motion.p
+                    className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 0.8 }}
+                  >
                     Get personalized skincare routines with the power of AI.
-                  </p>
+                  </motion.p>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                <motion.div
+                  className="flex flex-col gap-2 min-[400px]:flex-row"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6, duration: 0.8 }}
+                >
                   <Link href="/analysis">
                     <Button className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600">
                       Start My Analysis
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
-                </div>
+                </motion.div>
               </div>
               <div className="mx-auto lg:ml-auto flex justify-center lg:justify-end">
-                <div className="relative h-[350px] w-[350px] sm:h-[450px] sm:w-[450px] rounded-full overflow-hidden bg-lavender-100 dark:bg-lavender-900/30 flex items-center justify-center">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0, duration: 0.6 }}
+                  className="relative h-[300px] w-[300px] sm:h-[450px] sm:w-[450px] rounded-full overflow-hidden bg-lavender-200/40 dark:bg-gray-800 flex items-center justify-center"
+                >
                   <img
-                    alt="Skincare illustration"
-                    className="object-cover"
-                    src="/placeholder.svg?height=450&width=450"
-                    style={{
-                      aspectRatio: "450/450",
-                      objectFit: "cover",
-                    }}
+                    src="/DermaglowBlack.png"
+                    alt="Light Logo"
+                    className="block dark:hidden w-96 object-cover"
+                    style={{ aspectRatio: "450/450", objectFit: "cover" }}
                   />
-                </div>
+                  <img
+                    src="/DermaglowWhite.png"
+                    alt="Dark Logo"
+                    className="hidden dark:block w-96 object-cover"
+                    style={{ aspectRatio: "450/450", objectFit: "cover" }}
+                  />
+                </motion.div>
               </div>
             </div>
           </div>
@@ -58,17 +89,35 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                <motion.h2
+                  className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                >
                   How It Works
-                </h2>
-                <p className="max-w-[900px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                </motion.h2>
+                <motion.p
+                  className="max-w-[900px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                >
                   Our AI-powered platform analyzes your skin and provides
                   personalized recommendations in just a few steps.
-                </p>
+                </motion.p>
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <div className="flex flex-col justify-center space-y-4">
+              <motion.div
+                className="flex flex-col justify-center space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/30 text-lavender-600 dark:text-lavender-300">
                   <span className="text-xl font-bold">1</span>
                 </div>
@@ -76,8 +125,14 @@ export default function Home() {
                 <p className="text-gray-500 dark:text-gray-400">
                   Tell us about your skin type, concerns, and goals.
                 </p>
-              </div>
-              <div className="flex flex-col justify-center space-y-4">
+              </motion.div>
+              <motion.div
+                className="flex flex-col justify-center space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8, duration: 0.8 }}
+              >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/30 text-lavender-600 dark:text-lavender-300">
                   <span className="text-xl font-bold">2</span>
                 </div>
@@ -86,8 +141,14 @@ export default function Home() {
                   Our advanced AI analyzes your information to create a
                   personalized profile.
                 </p>
-              </div>
-              <div className="flex flex-col justify-center space-y-4">
+              </motion.div>
+              <motion.div
+                className="flex flex-col justify-center space-y-4"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.0, duration: 0.8 }}
+              >
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-lavender-100 dark:bg-lavender-900/30 text-lavender-600 dark:text-lavender-300">
                   <span className="text-xl font-bold">3</span>
                 </div>
@@ -96,7 +157,7 @@ export default function Home() {
                   Receive a customized skincare routine and product
                   recommendations.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -104,22 +165,40 @@ export default function Home() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                <motion.h2
+                  className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                >
                   Ready to Transform Your Skincare Routine?
-                </h2>
-                <p className="max-w-[900px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Join thousands of users who have discovered their perfect
-                  skincare routine with RejuveAI.
-                </p>
+                </motion.h2>
+                <motion.p
+                  className="max-w-[900px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.8 }}
+                >
+                  Start your journey to healthier skin with DermaGlow AI – your
+                  personalized skincare companion.
+                </motion.p>
               </div>
-              <div className="flex flex-col gap-2 min-[400px]:flex-row">
+              <motion.div
+                className="flex flex-col gap-2 min-[400px]:flex-row"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
                 <Link href="/analysis">
                   <Button className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600">
                     Start My Analysis
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </div>
         </section>
@@ -128,7 +207,7 @@ export default function Home() {
         <div className="border-t py-6 md:py-8">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-center text-sm text-gray-500 dark:text-gray-400 md:text-left">
-              © {new Date().getFullYear()} RejuveAI. All rights reserved.
+              © {new Date().getFullYear()} DermaGlow AI. All rights reserved.
             </p>
           </div>
         </div>

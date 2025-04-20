@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "RejuveAI - Personalized Skincare",
+  title: "DermaGlow AI - Personalized Skincare",
   description: "Get personalized skincare routines with the power of AI",
 };
 

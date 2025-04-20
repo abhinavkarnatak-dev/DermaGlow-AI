@@ -28,6 +28,7 @@ import {
 import { ArrowLeft, Upload, Loader2 } from "lucide-react";
 import { analyzeSkin } from "@/app/actions";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from "framer-motion";
 
 const skinTypes = [
   { value: "normal", label: "Normal" },
@@ -163,196 +164,222 @@ export default function AnalysisPage() {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-2xl space-y-8">
             <div className="space-y-2 text-center">
-              <h1 className="text-3xl font-bold tracking-tight">
+              <motion.h1
+                className="text-3xl font-bold tracking-tight"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+              >
                 Skin Analysis
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400">
+              </motion.h1>
+              <motion.p
+                className="text-gray-500 dark:text-gray-400"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4, duration: 0.8 }}
+              >
                 Complete the form below to receive your personalized skincare
                 routine.
-              </p>
+              </motion.p>
             </div>
-            <Card>
-              <CardHeader>
-                <CardTitle>Your Skin Profile</CardTitle>
-                <CardDescription>
-                  Tell us about your skin to get the most accurate
-                  recommendations.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                      <div className="space-y-2">
-                        <Label htmlFor="name">Name</Label>
-                        <Input
-                          id="name"
-                          name="name"
-                          placeholder="Your name"
-                          required
-                          value={formData.name}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="age">Age</Label>
-                        <Input
-                          id="age"
-                          name="age"
-                          type="number"
-                          placeholder="Your age"
-                          required
-                          min="1"
-                          max="120"
-                          value={formData.age}
-                          onChange={handleInputChange}
-                        />
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="gender">Gender</Label>
-                      <Select
-                        value={formData.gender}
-                        onValueChange={(value) =>
-                          handleSelectChange("gender", value)
-                        }
-                      >
-                        <SelectTrigger id="gender">
-                          <SelectValue placeholder="Select gender" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="male">Male</SelectItem>
-                          <SelectItem value="female">Female</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="skinType">Skin Type</Label>
-                      <Select
-                        value={formData.skinType}
-                        onValueChange={(value) =>
-                          handleSelectChange("skinType", value)
-                        }
-                      >
-                        <SelectTrigger id="skinType">
-                          <SelectValue placeholder="Select skin type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {skinTypes.map((type) => (
-                            <SelectItem key={type.value} value={type.value}>
-                              {type.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Skin Concerns</Label>
-                      <div className="grid grid-cols-2 gap-4">
-                        {skinConcerns.map((concern) => (
-                          <div
-                            key={concern.id}
-                            className="flex items-center space-x-2"
-                          >
-                            <Checkbox
-                              id={concern.id}
-                              checked={formData.skinConcerns.includes(
-                                concern.id
-                              )}
-                              onCheckedChange={(checked) =>
-                                handleCheckboxChange(
-                                  concern.id,
-                                  checked as boolean
-                                )
-                              }
-                            />
-                            <Label htmlFor={concern.id} className="font-normal">
-                              {concern.label}
-                            </Label>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="goals">Skincare Goals</Label>
-                      <Textarea
-                        id="goals"
-                        name="goals"
-                        placeholder="What are your skincare goals? (e.g., reduce acne, glowing skin, reduce fine lines)"
-                        value={formData.goals}
-                        onChange={handleInputChange}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="image">Upload Selfie (Optional)</Label>
-                      <div className="flex flex-col items-center gap-4">
-                        <div className="flex w-full items-center justify-center">
-                          <label
-                            htmlFor="image"
-                            className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
-                          >
-                            {previewUrl ? (
-                              <img
-                                src={previewUrl || "/placeholder.svg"}
-                                alt="Preview"
-                                className="h-full w-full object-contain p-2"
-                              />
-                            ) : (
-                              <div className="flex flex-col items-center justify-center space-y-2 p-4 text-center">
-                                <Upload className="h-8 w-8 text-gray-400" />
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                  Drag and drop or click to upload
-                                </p>
-                                <p className="text-xs text-gray-400 dark:text-gray-500">
-                                  (Optional) For more accurate analysis
-                                </p>
-                              </div>
-                            )}
-                            <Input
-                              id="image"
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={handleImageChange}
-                            />
-                          </label>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6, duration: 0.8 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle>Your Skin Profile</CardTitle>
+                  <CardDescription>
+                    Tell us about your skin to get the most accurate
+                    recommendations.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="name">Name</Label>
+                          <Input
+                            id="name"
+                            name="name"
+                            placeholder="Your name"
+                            required
+                            value={formData.name}
+                            onChange={handleInputChange}
+                          />
                         </div>
-                        {previewUrl && (
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => {
-                              setFormData((prev) => ({ ...prev, image: null }));
-                              setPreviewUrl(null);
-                            }}
-                          >
-                            Remove Image
-                          </Button>
-                        )}
+                        <div className="space-y-2">
+                          <Label htmlFor="age">Age</Label>
+                          <Input
+                            id="age"
+                            name="age"
+                            type="number"
+                            placeholder="Your age"
+                            required
+                            min="1"
+                            max="120"
+                            value={formData.age}
+                            onChange={handleInputChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="gender">Gender</Label>
+                        <Select
+                          value={formData.gender}
+                          onValueChange={(value) =>
+                            handleSelectChange("gender", value)
+                          }
+                        >
+                          <SelectTrigger id="gender">
+                            <SelectValue placeholder="Select gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="male">Male</SelectItem>
+                            <SelectItem value="female">Female</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="skinType">Skin Type</Label>
+                        <Select
+                          value={formData.skinType}
+                          onValueChange={(value) =>
+                            handleSelectChange("skinType", value)
+                          }
+                        >
+                          <SelectTrigger id="skinType">
+                            <SelectValue placeholder="Select skin type" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {skinTypes.map((type) => (
+                              <SelectItem key={type.value} value={type.value}>
+                                {type.label}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Skin Concerns</Label>
+                        <div className="grid grid-cols-2 gap-4">
+                          {skinConcerns.map((concern) => (
+                            <div
+                              key={concern.id}
+                              className="flex items-center space-x-2"
+                            >
+                              <Checkbox
+                                id={concern.id}
+                                checked={formData.skinConcerns.includes(
+                                  concern.id
+                                )}
+                                onCheckedChange={(checked) =>
+                                  handleCheckboxChange(
+                                    concern.id,
+                                    checked as boolean
+                                  )
+                                }
+                              />
+                              <Label
+                                htmlFor={concern.id}
+                                className="font-normal"
+                              >
+                                {concern.label}
+                              </Label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="goals">Skincare Goals</Label>
+                        <Textarea
+                          id="goals"
+                          name="goals"
+                          placeholder="What are your skincare goals? (e.g., reduce acne, glowing skin, reduce fine lines)"
+                          value={formData.goals}
+                          onChange={handleInputChange}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="image">Upload Selfie (Optional)</Label>
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="flex w-full items-center justify-center">
+                            <label
+                              htmlFor="image"
+                              className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-md border border-dashed border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            >
+                              {previewUrl ? (
+                                <img
+                                  src={previewUrl || "/placeholder.svg"}
+                                  alt="Preview"
+                                  className="h-full w-full object-contain p-2"
+                                />
+                              ) : (
+                                <div className="flex flex-col items-center justify-center space-y-2 p-4 text-center">
+                                  <Upload className="h-8 w-8 text-gray-400" />
+                                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                                    Drag and drop or click to upload
+                                  </p>
+                                  <p className="text-xs text-gray-400 dark:text-gray-500">
+                                    (Optional) For more accurate analysis
+                                  </p>
+                                </div>
+                              )}
+                              <Input
+                                id="image"
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                onChange={handleImageChange}
+                              />
+                            </label>
+                          </div>
+                          {previewUrl && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  image: null,
+                                }));
+                                setPreviewUrl(null);
+                              }}
+                            >
+                              Remove Image
+                            </Button>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <CardFooter className="flex justify-end px-0">
-                    <Button
-                      type="submit"
-                      disabled={isLoading}
-                      className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600"
-                    >
-                      {isLoading ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Analyzing your skin...
-                        </>
-                      ) : (
-                        "Submit Analysis"
-                      )}
-                    </Button>
-                  </CardFooter>
-                </form>
-              </CardContent>
-            </Card>
+                    <CardFooter className="flex justify-end px-0">
+                      <Button
+                        type="submit"
+                        disabled={isLoading}
+                        className="bg-lavender-600 hover:bg-lavender-700 dark:bg-lavender-500 dark:hover:bg-lavender-600"
+                      >
+                        {isLoading ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Analyzing your skin...
+                          </>
+                        ) : (
+                          "Submit Analysis"
+                        )}
+                      </Button>
+                    </CardFooter>
+                  </form>
+                </CardContent>
+              </Card>
+            </motion.div>
+
             {isLoading && (
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
@@ -374,7 +401,7 @@ export default function AnalysisPage() {
       </main>
       <footer className="border-t bg-white dark:bg-gray-950">
         <div className="container py-6 text-center text-sm text-gray-500 dark:text-gray-400">
-          © {new Date().getFullYear()} RejuveAI. All rights reserved.
+          © {new Date().getFullYear()} DermaGlow AI. All rights reserved.
         </div>
       </footer>
     </div>
