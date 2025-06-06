@@ -80,5 +80,16 @@
   ],
   "orientation": "portrait",
   "scope": "/",
-  "lang": "en"
+  "lang": "en",
+  "form_factor": ["narrow", "wide"],
+  "id": "/?utm_source=pwa",
+  "screenshots": [
+    {
+      "src": "/screenshot/375x6671.png",
+      "sizes": "375x667",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Your App Mobile Screen"
+    }
+  ]
 }
