@@ -90,6 +90,12 @@
       "type": "image/png",
       "form_factor": "narrow",
       "label": "Your App Mobile Screen"
+    },
+    {
+      "src": "/screenshot/1280x720.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide"
     }
   ]
 }
